@@ -7,7 +7,7 @@ cloud-provider-aws:
         preprocess: 'inject-commit-hash'
       publish:
         dockerimages:
-          cloud-provider-aws:
+          cloud-controller-manager:
             registry: 'gcr-readwrite'
             image: 'eu.gcr.io/gardener-project/kubernetes/cloud-provider-aws'
             dockerfile: 'Dockerfile'
