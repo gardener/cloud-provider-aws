@@ -95,6 +95,19 @@ func main() {
 				fmt.Fprintf(os.Stderr, "%v\n", err)
 				os.Exit(1)
 			}
+			if !cloud.HasClusterID() {
+				if c.ComponentConfig.KubeCloudShared.AllowUntaggedCloud {
+					klog.Warning("detected a cluster without a ClusterID.  A ClusterID will be required in the future.  Please tag your cluster to avoid any future issues")
+				} else {
+					klog.Fatalf("no ClusterID found.  A ClusterID is required for the cloud provider to function properly.  This check can be bypassed by setting the allow-untagged-cloud option")
+				}
+			}
+			// Initialize the cloud provider with a reference to the clientBuilder
+			cloud.Initialize(c.ClientBuilder, make(chan struct{}))
+			// Set the informer on the user cloud object
+			if informerUserCloud, ok := cloud.(cloudprovider.InformerUser); ok {
+				informerUserCloud.SetInformers(c.SharedInformers)
+			}
 
 			if err := app.Run(c.Complete(), app.DefaultControllerInitializers(c.Complete(), cloud), wait.NeverStop); err != nil {
 				fmt.Fprintf(os.Stderr, "%v\n", err)
