@@ -798,6 +798,9 @@ k8s.io/kube-openapi/pkg/handler
 k8s.io/kube-openapi/pkg/schemaconv
 k8s.io/kube-openapi/pkg/util
 k8s.io/kube-openapi/pkg/util/proto
+# k8s.io/kubernetes v1.20.0
+## explicit
+k8s.io/kubernetes/pkg/features
 # k8s.io/legacy-cloud-providers v0.0.0 => k8s.io/kubernetes/staging/src/k8s.io/legacy-cloud-providers v0.0.0-20201204214525-af46c47ce925
 ## explicit
 k8s.io/legacy-cloud-providers/aws
