@@ -8,16 +8,11 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go install \
   -mod=vendor \
   ./...
 
-############# base               #############
-FROM alpine:3.11.2 AS base
-
-RUN apk add --update bash curl
-
-WORKDIR /
-
 ############# cloud-provider-aws #############
-FROM base AS cloud-provider-aws
+FROM eu.gcr.io/gardener-project/3rd/alpine:3.12.3 AS cloud-provider-aws
 
 COPY --from=builder /go/bin/aws-cloud-controller-manager /aws-cloud-controller-manager
+
+WORKDIR /
 
 ENTRYPOINT ["/aws-cloud-controller-manager"]
